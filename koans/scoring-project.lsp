@@ -50,8 +50,17 @@
 ; Your goal is to write the score method.
 
 (defun score (dice)
-  ; You need to write this method
-)
+  (let ((ret 0))
+    (dotimes (i 6 ret)
+      (let ((cnt (count (+ i 1) dice)))
+        (cond
+          ((= i 0)
+           (setf ret (+ ret (* cnt 100)))
+           (if (>= cnt 3) (setf ret (+ ret 700))))
+          ((= i 4)
+           (setf ret (+ ret (* cnt 50)))
+           (if (>= cnt 3) (setf ret (+ ret 350))))
+          (t (if (>= cnt 3) (setf ret (+ ret (* (+ i 1) 100))))))))))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
